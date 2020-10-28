@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/47090675/97443481-1f5f3f00-193c-11eb-905f-ac9b0ff06dcb.png" alt="Logo" width="80" height="80">
+    <img src="./images/nrt-lms-logo.png" alt="Logo" width="80" height="80">
   <h3 align="center">NRT Library Management System</h3>
 
   <p align="center">
@@ -83,7 +83,6 @@ This section will be updated.
 ## Usage
 
 This section will be updated.
-
 
 <!-- LICENSE -->
 
