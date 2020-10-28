@@ -22,7 +22,7 @@
 ## Table of Contents
 
 - [About the Project](#about-the-project)
-  - [Entity-Relationship Diagram](#erd)
+  - [Entity-Relationship Diagram](#entity-relationship-diagram)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -58,11 +58,7 @@ This section should list any major frameworks that you built your project using.
 
 ### Entity-Relationship Diagram
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-- [Bootstrap](https://getbootstrap.com)
-- [JQuery](https://jquery.com)
-- [Laravel](https://laravel.com)
+![Entity-Relationship Diagram][ert-screenshot]
 
 <!-- GETTING STARTED -->
 
@@ -98,3 +94,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [license-url]: https://github.com/rtanyildizi/Library-Management-System/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-grey
 [linkedin-url]: https://linkedin.com/in/nurettin-resul-a3a0141a7
+[erd-screenshot]: images/nrt-lms-erd.png
