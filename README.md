@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="./images/nrt-lms-logo.png" alt="Logo" width="80" height="80">
+    <img src="./images/nrt-lms-logo.png" alt="Logo" width="300" height="300">
   <h3 align="center">NRT Library Management System</h3>
 
   <p align="center">
