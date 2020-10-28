@@ -1,13 +1,12 @@
 [![Contributors][contributors-shield]][contributors-url]
+[![Repo size][repo-size-shield]][repo-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 [![MIT License][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://user-images.githubusercontent.com/47090675/97443481-1f5f3f00-193c-11eb-905f-ac9b0ff06dcb.png">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
+    <img src="https://user-images.githubusercontent.com/47090675/97443481-1f5f3f00-193c-11eb-905f-ac9b0ff06dcb.png" alt="Logo" width="80" height="80">
   <h3 align="center">NRT Library Management System</h3>
 
   <p align="center">
@@ -85,17 +84,18 @@ This section will be updated.
 
 This section will be updated.
 
-<!-- ROADMAP -->
 
 <!-- LICENSE -->
-
-### Contributers
-
-[[params.social]]
-icon = "linkedin"
-icon_pack = "fa"
-link = "//linkedin.com/in/nurettin-resul-a3a0141a7/"
 
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+[repo-url]: https://github.com/rtanyildizi/Library-Management-System/
+[contributors-shield]: https://img.shields.io/github/contributors/rtanyildizi/Library-Management-System
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[repo-size-shield]: https://img.shields.io/github/repo-size/rtanyildizi/Library-Management-System
+[license-shield]: https://img.shields.io/github/license/rtanyildizi/Library-Management-System
+[license-url]: https://github.com/rtanyildizi/Library-Management-System/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-grey
+[linkedin-url]: https://linkedin.com/in/nurettin-resul-a3a0141a7
