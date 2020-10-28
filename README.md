@@ -58,7 +58,7 @@ This section should list any major frameworks that you built your project using.
 
 ### Entity-Relationship Diagram
 
-[![Entity-Relationship Diagram][erd-screenshot]]
+![Entity-Relationship Diagram][erd-screenshot]
 
 <!-- GETTING STARTED -->
 
