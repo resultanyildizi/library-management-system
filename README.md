@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="./images/nrt-lms-logo.png" alt="Logo" width="300" height="300">
+    <img src="./images/nrt-lms-logo.png" alt="Logo" width="200" height="200">
   <h3 align="center">NRT Library Management System</h3>
 
   <p align="center">
@@ -95,6 +95,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [repo-size-shield]: https://img.shields.io/github/repo-size/rtanyildizi/Library-Management-System
 [license-shield]: https://img.shields.io/github/license/rtanyildizi/Library-Management-System
-[license-url]: https://github.com/rtanyildizi/Library-Management-System/blob/master/LICENSE.txt
+[license-url]: https://github.com/rtanyildizi/Library-Management-System/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-grey
 [linkedin-url]: https://linkedin.com/in/nurettin-resul-a3a0141a7
