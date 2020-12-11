@@ -1,0 +1,37 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend server for NRT Library Management System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtanyildizi/Library-Management-System.git"
+  },
+  "keywords": [
+    "NRT",
+    "Library",
+    "Management",
+    "System"
+  ],
+  "author": "Nurettin Resul Tanyıldızı <tanyildizi.resul@gmail.com> (https://www.linkedin.com/in/nurettin-resul-a3a0141a7/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rtanyildizi/Library-Management-System/issues"
+  },
+  "homepage": "https://github.com/rtanyildizi/Library-Management-System#readme",
+  "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "@hapi/hapi": "^20.0.3",
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "hapi-auth-jwt2": "^10.2.0",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mssql": "^6.2.3"
+  }
+}
