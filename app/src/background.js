@@ -16,6 +16,7 @@ async function createWindow() {
     backgroundColor: "#dddddd",
     center: true,
     autoHideMenuBar: true,
+    
     width: 800,
     height: 600,
     minWidth: 800,

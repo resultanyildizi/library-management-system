@@ -1,4 +1,5 @@
 const bcrypt = require("../services/bcrypt.service");
+const jwt = require("../services/jwt.service");
 const Boom = require("@hapi/boom");
 const Joi = require("joi");
 
@@ -16,7 +17,7 @@ module.exports.register = async (server) => {
   const handlers = {
     signup: async (req, h) => {
       try {
-        if (process.env.NODE_ENV === "production") return Boom.forbidden();
+        if (req.query.key !== process.env.SIGNUP_KEY) return Boom.forbidden();
         const { email, password } = req.payload;
         const db = server.plugins.sql.client;
 
@@ -30,10 +31,72 @@ module.exports.register = async (server) => {
       } catch (err) {
         if (err.number == errors.uniqueConstraint)
           return Boom.conflict(err.message, err);
+
+        return Boom.internal(err);
       }
     },
 
-    login: async (req, h) => {},
+    login: async (req, h) => {
+      try {
+        const { email, password } = req.payload;
+        const db = server.plugins.sql.client;
+        const result = await db.admin.selectAdminByEmail({ email });
+
+        // * If email is valid, check for the password
+        if (result && result.recordset && result.recordset.length > 0) {
+          const admin = result.recordset[0];
+
+          //* Check if passwords match
+          const isValid = await bcrypt.compareData(
+            password,
+            admin.hashedPassword
+          );
+
+          //* If credentials are valid, create a token
+          if (isValid) {
+            const { adminId, email } = admin;
+            const token = jwt.issue({
+              payload: { adminId, email },
+              expiresIn: "1d",
+            });
+
+            return {
+              token,
+            };
+          }
+
+          return Boom.unauthorized("Invalid login credentials");
+        }
+
+        return "Hi";
+      } catch (err) {
+        console.error(err);
+        return Boom.internal(err);
+      }
+    },
+
+    validate: async (decoded, req, h) => {
+      try {
+        const { adminId, email } = decoded;
+        const db = server.plugins.sql.client;
+        console.log(decoded);
+        const result = await db.admin.selectPublicDataByIdAndEmail(
+          adminId,
+          email
+        );
+
+        if (result && result.recordset && result.recordset.length === 1) {
+          return {
+            isValid: true,
+            credentials: decoded,
+          };
+        }
+        return { isValid: false };
+      } catch (error) {
+        console.error(error);
+        return Boom.internal(error);
+      }
+    },
   };
 
   return {
