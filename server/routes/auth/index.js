@@ -1,7 +1,7 @@
 const controller = require("../../controller");
 
 module.exports.register = async (server) => {
-  const authController = (await controller.register(server)).auth;
+  const authController = controller.register(server).auth;
 
   const routes = [
     {
@@ -23,6 +23,10 @@ module.exports.register = async (server) => {
         handler: authController.handlers.login,
         validate: {
           payload: authController.schema.payload,
+        },
+        cors: {
+          origin: ["http://localhost:8080"],
+          credentials: true,
         },
         auth: false,
       },

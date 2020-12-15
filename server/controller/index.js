@@ -1,7 +1,9 @@
 const auth = require("./auth");
+const api = require("./api");
 
-module.exports.register = async (server) => {
+module.exports.register = (server) => {
   return {
-    auth: await auth.register(server),
+    api: api.register(server),
+    auth: auth.register(server),
   };
 };

@@ -3,7 +3,7 @@ const jwt = require("../services/jwt.service");
 const Boom = require("@hapi/boom");
 const Joi = require("joi");
 
-module.exports.register = async (server) => {
+module.exports.register = (server) => {
   const schema = {
     payload: Joi.object({
       email: Joi.string().email().required(),
@@ -64,11 +64,8 @@ module.exports.register = async (server) => {
               token,
             };
           }
-
-          return Boom.unauthorized("Invalid login credentials");
         }
-
-        return "Hi";
+        return Boom.unauthorized("Invalid login credentials");
       } catch (err) {
         console.error(err);
         return Boom.internal(err);
@@ -79,7 +76,6 @@ module.exports.register = async (server) => {
       try {
         const { adminId, email } = decoded;
         const db = server.plugins.sql.client;
-        console.log(decoded);
         const result = await db.admin.selectPublicDataByIdAndEmail(
           adminId,
           email

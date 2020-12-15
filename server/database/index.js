@@ -1,5 +1,6 @@
 const sql = require("mssql");
 const admin = require("./admin");
+const publisher = require("./publisher");
 const client = async (server, config) => {
   let pool = null;
 
@@ -33,6 +34,7 @@ const client = async (server, config) => {
 
   return {
     admin: await admin.register({ sql, getConnection }),
+    publisher: await publisher.register({ sql, getConnection }),
   };
 };
 

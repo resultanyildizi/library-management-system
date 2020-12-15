@@ -1,0 +1,9 @@
+-- Drop the function 'FN_TrimWord' in schema 'dbo'
+IF EXISTS (
+SELECT *
+FROM INFORMATION_SCHEMA.ROUTINES
+WHERE SPECIFIC_SCHEMA = N'dbo'
+    AND SPECIFIC_NAME = N'FN_TrimWord'
+)
+DROP FUNCTION dbo.[FN_TrimWord]
+GO
