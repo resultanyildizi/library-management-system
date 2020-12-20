@@ -30,6 +30,7 @@ module.exports = {
     },
     errors: {
       uniqueConstraint: 2627,
+      duplicate: 2601,
     },
   },
 };

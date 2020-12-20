@@ -16,6 +16,8 @@
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "electron-devtools-installer": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "slugify": "^1.4.6",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11",

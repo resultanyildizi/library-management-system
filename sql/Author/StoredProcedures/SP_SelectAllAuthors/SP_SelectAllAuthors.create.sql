@@ -12,8 +12,10 @@ GO
 CREATE PROCEDURE dbo.SP_SelectAllAuthors
 AS
 -- body of the stored procedure
-SELECT *
-FROM dbo.[VW_AuthorCountryJoin]
+SELECT A.[authorId], [fullName], [birthYear], [image], [countryName], [bookCount]
+FROM dbo.[VW_Authors] AS [A]
+    JOIN [VW_JoinCountry] AS [C] ON [A].[authorId] = [C].[authorId]
+    JOIN [VW_JoinBookInfo_Author] AS [BI_A] ON [A].[authorId] = [BI_A].[authorId]
 ORDER BY [fullName]
 GO
 -- example to execute the stored procedure we just created

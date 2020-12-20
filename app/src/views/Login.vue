@@ -13,8 +13,8 @@
 
 
 <script>
-import AppLogo from "../components/AppLogo.vue";
-import LoginForm from "../components/LoginForm.vue";
+import AppLogo from "@/components/Core/AppLogo.vue";
+import LoginForm from "@/components/Auth/LoginForm.vue";
 export default {
   components: { LoginForm, AppLogo },
 

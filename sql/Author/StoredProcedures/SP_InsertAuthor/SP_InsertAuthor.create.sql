@@ -11,7 +11,7 @@ GO
 -- Create the stored procedure in the specified schema
 CREATE PROCEDURE dbo.SP_InsertAuthor
     @fullName NVARCHAR(100),
-    @birthYear DATE,
+    @birthYear DATE = NULL,
     @image NVARCHAR(4000) = NULL,
     @countryId INT = NULL
 

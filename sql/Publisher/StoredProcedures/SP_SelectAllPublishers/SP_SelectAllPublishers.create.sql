@@ -12,13 +12,10 @@ GO
 CREATE PROCEDURE dbo.SP_SelectAllPublishers
 AS
 -- body of the stored procedure
-SELECT
-    [publisherId],
-    [name],
-    COALESCE([description], SPACE(20)) AS [description],
-    dbo.[FN_OnlyYear]([foundationYear]) AS [foundationYear],
-    COALESCE([image], N'publisher/default_publisher.jpg') AS [image]
-FROM dbo.[Publisher]
+SELECT P.*, BI.[bookCount]
+FROM dbo.[VW_Publishers] AS P
+    JOIN dbo.[VW_JoinBookInfo] AS BI
+    ON P.[publisherId] = BI.[publisherId]
 ORDER BY [name] ASC     
 GO
 EXECUTE dbo.SP_SelectAllPublishers 

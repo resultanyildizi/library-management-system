@@ -1,3 +1,6 @@
+--! This table references:
+--!     Author
+
 -- Create a new table called 'Country' in schema 'dbo'
 -- Drop the table if it already exists
 IF OBJECT_ID('dbo.Country', 'U') IS NOT NULL

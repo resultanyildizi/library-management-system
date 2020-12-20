@@ -15,11 +15,20 @@ RETURNS NVARCHAR(4)
 AS
 -- body of the function
 BEGIN
-    DECLARE @year INT
-    SET @year = YEAR(@date)
-    RETURN CAST(@year AS NVARCHAR)
+    DECLARE @result NVARCHAR(4)
+
+    IF @date IS NOT NULL 
+    BEGIN
+        DECLARE @year INT
+        SET @year = YEAR(@date)
+        SET @result = CAST(@year AS NVARCHAR)
+    END
+    ELSE
+        SET @result = N'????'
+
+    RETURN @result
 END
 GO
 -- example to execute the function we just created
-SELECT dbo.[FN_OnlyYear](GETDATE())
+SELECT dbo.[FN_OnlyYear](NULL)
 GO

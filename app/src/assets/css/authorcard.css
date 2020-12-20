@@ -1,0 +1,80 @@
+/**** Sass Variables ****/
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background: #333;
+}
+
+.card {
+  height: 300px;
+  max-width: 250px;
+  transform: translate(0%, 0%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: 0.5s;
+}
+.card .card-image {
+  width: 100%;
+  position: absolute;
+  height: 350px;
+  z-index: 1;
+  background-color: #000;
+  transition: 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(0, -5px);
+}
+
+.card .card-image img {
+  position: relative;
+  height: 100%;
+}
+.card:hover img {
+  opacity: 0.4;
+  transition: 0.5s;
+}
+
+.card:hover .card-image {
+  transform: translateY(-30px);
+  transition: all 0.4s;
+}
+
+/**** Personal Details ****/
+.details {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.details::-webkit-scrollbar {
+  display: none;
+}
+
+.card:hover .details {
+  opacity: 1;
+  transition: all 0.9s;
+}
+
+.details h2 {
+  font-size: 1.25rem;
+  opacity: 1;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.details .job-title {
+  opacity: 1;
+  font-size: 1.15rem;
+  color: #f8bf0f;
+  font-weight: 400;
+}

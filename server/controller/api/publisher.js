@@ -5,9 +5,9 @@ module.exports.register = (server) => {
   const schema = {
     payload: Joi.object({
       name: Joi.string().min(1).max(70).required(),
-      description: Joi.string().min(1).max(1000).optional().allow(null),
+      description: Joi.string().max(1000).optional().allow(null).allow(""),
       foundationYear: Joi.string().min(1).max(4).optional().allow(null),
-      image: Joi.string().min(1).max(4000).optional().allow(null),
+      image: Joi.string().max(4000).optional().allow(null),
     }),
     params: Joi.object({
       id: Joi.number().min(1).integer().required(),

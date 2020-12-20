@@ -1,9 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store";
 
-import Dashboard from "@/views/Dashboard";
-import Publishers from "@/views/Publishers";
 import Login from "@/views/Login";
+
+import Books from "@/views/Books";
+import Authors from "@/views/Authors";
+import Categories from "@/views/Categories";
+import Publishers from "@/views/Publishers";
 
 Vue.use(VueRouter);
 
@@ -11,28 +15,24 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Dashboard,
-    beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) next("/login");
-      else next("/dashboard");
-    },
-  },
-  {
-    path: "/login",
-    name: "Login",
     component: Login,
     beforeEnter: async (to, from, next) => {
-      if (localStorage.getItem("token")) next("/dashboard");
-
+      const isValid = await store.dispatch("auth/validateToken");
+      console.log(isValid);
+      if (isValid) next("/books");
       next();
     },
   },
+
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-    beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) next("/login");
+    path: "/books",
+    name: "Books",
+    icon: "mdi-book",
+    component: Books,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
       next();
     },
   },
@@ -40,9 +40,37 @@ const routes = [
   {
     path: "/publishers",
     name: "Publishers",
+    icon: "mdi-city",
     component: Publishers,
-    beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) next("/login");
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
+      next();
+    },
+  },
+
+  {
+    path: "/authors",
+    name: "Authors",
+    icon: "mdi-pen",
+    component: Authors,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
+      next();
+    },
+  },
+  {
+    path: "/categories",
+    name: "Categories",
+    icon: "mdi-view-grid",
+    component: Categories,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
       next();
     },
   },

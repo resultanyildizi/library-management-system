@@ -17,5 +17,7 @@ SELECT *
 FROM dbo.[Publisher]
 WHERE [publisherId] = @id 
 GO
+
+
 EXECUTE dbo.SP_SelectPublisherById @id = 1000
 GO

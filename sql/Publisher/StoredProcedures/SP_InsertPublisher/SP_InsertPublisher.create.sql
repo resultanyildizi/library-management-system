@@ -21,6 +21,8 @@ VALUES
     (dbo.[FN_ProperCase](@name), @description, @foundationYear, @image)
 GO
 -- example to execute the stored procedure we just created
+DELETE FROM dbo.[Publisher]
+GO
 EXECUTE dbo.SP_InsertPublisher
     @name = N'Türkiye iş bankası yayınları', 
     @description = 'Türkiye İş Bankası Kültür Yayınları, 1956 yılında Hasan Âli Yücel tarafından kuruldu. Hasan Âli Yücel, Milli Eğitim Bakanlığı döneminde başlattığı “dünya klasikleri”nin dilimize kazandırılması ve yaygın olarak okunması çalışmasından aldığı hız ve birikimiyle, Türkiye İş Bankası’ndan aldığı gücü birleştirerek, ülkemizin önemli ve köklü yayınevlerinden birini kurmuş oluyordu.', 
@@ -33,3 +35,18 @@ EXECUTE dbo.SP_InsertPublisher
 @foundationYear = '1990', 
 @image = 'publisher/iz_yayincilik.jpg'
 GO
+EXECUTE dbo.SP_InsertPublisher 
+@name =N'Can Yayınları',
+@description= N'1981’de, Türkiye’nin önde gelen yazarlarından biri olan Erdal Öz tarafından kuruldu ve kısa sürede Türkiye’nin en saygın yayınevlerinden biri haline geldi. Yıllar içinde dünyanın en önemli yazarları, CAN aracılığıyla Türk okuruna ulaştı; Türk edebiyatının en önde gelen, en yetenekli, en heyecan verici kalemleri CAN çatısı altında yer aldı. 21. yüzyılda da CAN klasik, modern ve çağdaş edebiyatta öncü yayınevleri arasındaki konumunu koruyor.', 
+@foundationYear = '1981',
+@image = N'publisher/can_yayinlari.jpg'
+GO
+EXECUTE dbo.SP_InsertPublisher 
+@name = N'Pegasus Yayınları', 
+@description = N'Çiğnenmesi ve sindirilmesi gereken kitapların adresi Pegasus Yayınları 1 Ocak 2006 yılında yayın hayatına başladı. İlk yılımızda daha çok araştırma kitaplarına yönelmemize rağmen son yıllarda okurların yakından takip ettiği seri kitaplarımızla birlikte çok satanlar listesinde her zaman yer edinen romanlarımızla tanınıyoruz.', 
+@foundationYear ='2006', 
+@image = N'publisher/pegasus_yayinlari.jpg'
+GO
+
+SELECT *
+FROM dbo.[Publisher]

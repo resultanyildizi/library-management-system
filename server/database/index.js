@@ -3,6 +3,10 @@ const sql = require("mssql");
 const admin = require("./admin");
 const publisher = require("./publisher");
 const author = require("./author");
+const country = require("./country");
+const category = require("./category");
+const bookInfo = require("./bookInfo");
+const language = require("./language");
 
 const client = async (server, config) => {
   let pool = null;
@@ -39,6 +43,10 @@ const client = async (server, config) => {
     admin: await admin.register({ sql, getConnection }),
     publisher: await publisher.register({ sql, getConnection }),
     author: await author.register({ sql, getConnection }),
+    country: await country.register({ sql, getConnection }),
+    category: await category.register({ sql, getConnection }),
+    bookInfo: await bookInfo.register({ sql, getConnection }),
+    language: await language.register({ sql, getConnection }),
   };
 };
 

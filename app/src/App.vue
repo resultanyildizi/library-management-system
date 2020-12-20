@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Navbar from "./components/Navbar.vue";
+import Navbar from "./components/Core/Navbar.vue";
 export default {
   name: "App",
   components: {
@@ -22,6 +22,14 @@ html::-webkit-scrollbar {
   display: none;
 }
 html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+* {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }

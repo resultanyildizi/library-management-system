@@ -1,0 +1,39 @@
+<template>
+  <section>
+    <v-row justify="center">
+      <v-col
+        v-for="author in authors"
+        :key="author.id"
+        cols="12"
+        md="4"
+        lg="3"
+        xl="2"
+      >
+        <author-card
+          :name="author.fullName"
+          :image="author.image"
+          :countryName="author.countryName"
+          :birthYear="author.birthYear"
+          :bookCount="author.bookCount"
+      /></v-col>
+    </v-row>
+  </section>
+</template>
+
+<script>
+import AuthorCard from "./AuthorCard.vue";
+
+export default {
+  name: "AuthorList",
+  components: { AuthorCard },
+  props: {
+    authors: {
+      type: Array,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style>
+</style>

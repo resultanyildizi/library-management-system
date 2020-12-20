@@ -5,7 +5,7 @@ module.exports.register = (server) => {
   const schema = {
     payload: Joi.object({
       fullName: Joi.string().min(1).max(100).required(),
-      birthYear: Joi.string().min(1).max(4).required(),
+      birthYear: Joi.string().min(1).max(4).optional().allow(null),
       image: Joi.string().min(1).max(4000).optional().allow(null),
       countryId: Joi.number().integer().min(1).optional().allow(null),
     }),
@@ -42,7 +42,6 @@ module.exports.register = (server) => {
         const db = server.plugins.sql.client;
 
         const { name } = req.query;
-        console.log(name);
 
         const result = await (name
           ? db.author.selectAuthorByNameOrCountry({ name })

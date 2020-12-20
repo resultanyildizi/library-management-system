@@ -12,7 +12,7 @@ GO
 CREATE PROCEDURE dbo.SP_SelectAllCountries
 AS
 SELECT *
-FROM dbo.[VW_SelectCountryName]
+FROM dbo.[VW_Countries]
 ORDER BY [countryName] ASC
 GO
 

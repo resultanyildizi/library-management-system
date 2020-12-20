@@ -7,7 +7,6 @@ const issue = ({ payload, expiresIn }) => {
 
   return token;
 };
-
 module.exports = {
   issue,
 };
