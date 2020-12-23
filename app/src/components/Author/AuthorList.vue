@@ -10,12 +10,10 @@
         xl="2"
       >
         <author-card
-          :name="author.fullName"
-          :image="author.image"
-          :countryName="author.countryName"
-          :birthYear="author.birthYear"
-          :bookCount="author.bookCount"
-      /></v-col>
+          :author="author"
+          v-on:openDeleteDialog="openDeleteDialog"
+        />
+      </v-col>
     </v-row>
   </section>
 </template>
@@ -30,6 +28,11 @@ export default {
     authors: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    openDeleteDialog(e) {
+      this.$emit("openDeleteDialog", e);
     },
   },
 };

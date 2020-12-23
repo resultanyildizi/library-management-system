@@ -1,4 +1,5 @@
 const Boom = require("@hapi/boom");
+const assert = require("assert");
 const Joi = require("joi");
 
 module.exports.register = (server) => {
@@ -35,10 +36,11 @@ module.exports.register = (server) => {
   const handlers = {
     getAllCategories: async (req, h) => {
       try {
-        console.log("called");
         var categories = [];
         var newCategories = null;
         newCategories = await createCategories(categories, null);
+
+        assert(newCategories);
 
         if (newCategories) return newCategories;
         else return Boom.internal();
@@ -54,11 +56,12 @@ module.exports.register = (server) => {
         const db = server.plugins.sql.client;
         const result = await db.category.insertCategory({ parentId, name });
 
+        assert(result);
+
         if (result && result.rowsAffected > 0) {
           return h.response().code(201);
-        } else {
-          return Boom.internal();
         }
+        return Boom.internal();
       } catch (err) {
         console.error(err);
         return Boom.internal(err);
@@ -71,11 +74,12 @@ module.exports.register = (server) => {
         const db = server.plugins.sql.client;
         const result = await db.category.deleteCategory({ categoryId });
 
+        assert(result);
+
         if (result && result.rowsAffected > 0) {
           return h.response().code(204);
-        } else {
-          return Boom.internal();
         }
+        return Boom.internal();
       } catch (err) {
         console.error(err);
         return Boom.internal(err);

@@ -3,6 +3,8 @@ const jwt = require("../services/jwt.service");
 const Boom = require("@hapi/boom");
 const Joi = require("joi");
 
+const assert = require("assert");
+
 module.exports.register = (server) => {
   const schema = {
     payload: Joi.object({
@@ -25,6 +27,8 @@ module.exports.register = (server) => {
 
         const result = await db.admin.insertAdmin({ email, hashedPassword });
 
+        assert(result);
+
         return result.rowsAffected[0] === 1
           ? h.response().code(201)
           : Boom.internal();
@@ -41,6 +45,8 @@ module.exports.register = (server) => {
         const { email, password } = req.payload;
         const db = server.plugins.sql.client;
         const result = await db.admin.selectAdminByEmail({ email });
+
+        assert(result);
 
         // * If email is valid, check for the password
         if (result && result.recordset && result.recordset.length > 0) {
@@ -80,6 +86,8 @@ module.exports.register = (server) => {
           adminId,
           email
         );
+
+        assert(result);
 
         if (result && result.recordset && result.recordset.length === 1) {
           return {

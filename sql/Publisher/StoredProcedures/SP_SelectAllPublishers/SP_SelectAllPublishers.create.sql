@@ -10,13 +10,14 @@ DROP PROCEDURE dbo.SP_SelectAllPublishers
 GO
 -- Create the stored procedure in the specified schema
 CREATE PROCEDURE dbo.SP_SelectAllPublishers
+    @orderType INT = 1
 AS
 -- body of the stored procedure
-SELECT P.*, BI.[bookCount]
-FROM dbo.[VW_Publishers] AS P
-    JOIN dbo.[VW_JoinBookInfo] AS BI
-    ON P.[publisherId] = BI.[publisherId]
-ORDER BY [name] ASC     
+SELECT *
+FROM [VW_PublishersJoinedAll]
+ORDER BY 
+(   CASE @orderType WHEN 1 THEN [name] END ) ASC,
+(   CASE @orderType WHEN 2 THEN CAST([bookCount] AS NVARCHAR)  END) DESC, [name] ASC
 GO
-EXECUTE dbo.SP_SelectAllPublishers 
-GO
+EXECUTE dbo.SP_SelectAllPublishers 2
+GO  

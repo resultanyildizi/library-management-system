@@ -56,10 +56,14 @@ export default {
   methods: {
     ...mapActions("category", ["addCategory"]),
     async _addCategory() {
-      const { name, parentId } = this;
-      await this.addCategory({ name, parentId });
-      this.dialog = false;
-      this.resetValidation();
+      try {
+        const { name, parentId } = this;
+        await this.addCategory({ name, parentId });
+        this.dialog = false;
+        this.resetValidation();
+      } catch (err) {
+        console.log(err);
+      }
     },
     validate() {
       this.$refs.form.validate();

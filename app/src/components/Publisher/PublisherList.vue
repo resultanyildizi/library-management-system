@@ -12,11 +12,8 @@
         align="center"
       >
         <publisher-card
-          :name="publisher.name"
-          :foundationYear="publisher.foundationYear"
-          :image="publisher.image"
-          :description="publisher.description"
-          :bookCount="publisher.bookCount"
+          :publisher="publisher"
+          v-on:openDeleteDialog="openDeleteDialog"
         />
       </v-col>
     </v-row>
@@ -34,6 +31,12 @@ export default {
     publishers: {
       type: Array,
       required: true,
+    },
+  },
+
+  methods: {
+    openDeleteDialog(e) {
+      this.$emit("openDeleteDialog", e);
     },
   },
 };

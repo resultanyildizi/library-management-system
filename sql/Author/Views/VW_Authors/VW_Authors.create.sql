@@ -16,7 +16,7 @@ AS
     -- body of the view
     SELECT [authorId],
         [fullName],
-        COALESCE(dbo.[FN_OnlyYear]([birthYear]), '???') AS [birthYear],
+        COALESCE(dbo.[FN_OnlyYear]([birthYear]), '????') AS [birthYear],
         COALESCE([image], N'author/default_profile.jpg') AS [image],
         [countryId]
     FROM dbo.[Author]

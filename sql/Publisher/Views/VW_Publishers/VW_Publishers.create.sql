@@ -16,7 +16,7 @@ AS
     SELECT
         [publisherId],
         [name],
-        COALESCE([description], SPACE(20)) AS [description],
+        COALESCE([description], [name]) AS [description],
         dbo.[FN_OnlyYear]([foundationYear]) AS [foundationYear],
         COALESCE([image], N'publisher/default_publisher.jpg') AS [image]
     FROM dbo.[Publisher]

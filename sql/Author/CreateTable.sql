@@ -23,3 +23,6 @@ CREATE TABLE dbo.Author
 GO
 
 CREATE INDEX IX_Author_fullName ON dbo.[Author](fullName)
+
+SELECT *
+FROM dbo.[Author]

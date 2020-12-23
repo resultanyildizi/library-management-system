@@ -16,5 +16,8 @@ AS
 DELETE FROM dbo.[Publisher] WHERE [publisherId] = @id
 GO
 -- example to execute the stored procedure we just created
-EXECUTE dbo.SP_DeletePublisherById 1000
+EXECUTE dbo.SP_DeletePublisherById 1023
 GO
+
+SELECT *
+FROM dbo.Publisher

@@ -6,7 +6,8 @@
       <ul class="hardcover_front">
         <li>
           <img
-            src="@/assets/img/cover1.jpg"
+            style="background-size: contain !important"
+            :src="getImage"
             alt=""
             width="100%"
             height="100%"
@@ -18,8 +19,31 @@
       <!-- Pages -->
       <ul class="page">
         <li></li>
-        <li class="text-center">
-          <a class="btn" href="#">Ödünç Ver</a>
+        <li class="text-center pt-2">
+          <span class="caption google-sans-regular primary--text"
+            >{{ bookInfo.vpageCount }} pages</span
+          >
+          <br />
+          <span class="caption google-sans-regular primary--text">{{
+            bookInfo.categoryName
+          }}</span>
+
+          <v-divider class="my-2"></v-divider>
+          <a class="btn" @click="_updateBook">Update</a>
+          <br />
+          <a class="btn" @click="_openBook">Open</a>
+          <br />
+          <a class="btn" @click="_deleteBook">Delete</a>
+          <v-divider class="my-2"></v-divider>
+          <div class="caption secondary--text">Score</div>
+          <v-rating
+            background-color="secondary "
+            color="secondary"
+            v-model="score"
+            dense
+            hover
+            size="20"
+          ></v-rating>
         </li>
         <li></li>
         <li></li>
@@ -37,22 +61,75 @@
         <li></li>
       </ul>
       <figcaption>
-        <h1>Papelucho Perdido</h1>
-        <span>By Marcela Paz</span>
-        <p>
-          Şişli’deki üç katlı pembe binanın perdeleri sıkı sıkıya kapalıydı. Gaz
-          lambasının cılız ışığı, odayı hayal meyal aydınlatıyordu. Altı
-          kişiydiler. Üzerine harita yayılmış masanın etrafında, ayaktaydılar.
-          Talihsiz bir kuşağın çocuklarıydılar... ”
-        </p>
+        <h1>{{ bookInfo.name }}</h1>
+        <span>By {{ bookInfo.authorNames }}</span>
+        <span class="append" v-if="bookInfo.translatorId">
+          Translated by {{ bookInfo.translatorName }}
+        </span>
+        <span class="append mb-3"
+          >Published by {{ bookInfo.publisherName }}</span
+        >
+        <p>{{ bookInfo.vdescription.substring(0, 250) }}...”</p>
       </figcaption>
     </figure>
   </li>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Book",
+  data() {
+    return {
+      score: 0,
+    };
+  },
+
+  created() {
+    this.score = this.bookInfo.score;
+  },
+
+  watch: {
+    score(newVal, oldVal) {
+      if (newVal !== oldVal && newVal) {
+        this.updateScore({
+          bookInfoId: this.bookInfo.bookInfoId,
+          score: newVal,
+        });
+      }
+    },
+  },
+
+  methods: {
+    ...mapActions("book", ["deleteBook", "updateScore", "openBookPage"]),
+    _updateBook() {
+      console.log("Update");
+      this.$emit("updateBookDialog", this.bookInfo);
+    },
+    async _deleteBook() {
+      const { name, bookInfoId } = this.bookInfo;
+      this.$emit("deleteBookDialog", { name, bookInfoId });
+    },
+    _openBook() {
+      this.openBookPage({ bookInfo: this.bookInfo });
+    },
+  },
+
+  computed: {
+    getImage() {
+      try {
+        return require(`@/assets/upload/img/${this.bookInfo.vimage}`);
+      } catch (err) {
+        return require("@/assets/upload/img/book/default_book_cover.jpg");
+      }
+    },
+  },
+  props: {
+    bookInfo: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 

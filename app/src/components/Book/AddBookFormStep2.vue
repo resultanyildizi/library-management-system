@@ -124,12 +124,32 @@ export default {
     };
   },
 
-  created() {},
+  props: {
+    bookInfo: {
+      type: Object,
+    },
+  },
+
+  created() {
+    if (this.bookInfo) {
+      if (this.bookInfo.authorIds) {
+        const authorIds = this.bookInfo.authorIds.split(", ");
+        authorIds.forEach((id) =>
+          this.authorNames.push(this.getAuthorsMap[id])
+        );
+      }
+      this.translatorName = this.bookInfo.translatorId
+        ? this.getAuthorsMap[this.bookInfo.translatorId]
+        : null;
+      this.publisherName = this.bookInfo.publisherId
+        ? this.getPublishersMap[this.bookInfo.publisherId]
+        : null;
+    }
+  },
 
   computed: {
     ...mapGetters("author", ["getAuthorsMap"]),
     ...mapGetters("publisher", ["getPublishersMap"]),
-    ...mapGetters("book", ["getLastInsertedBookId"]),
     getAuthorNames() {
       return Object.values(this.getAuthorsMap);
     },
@@ -175,7 +195,6 @@ export default {
         }
 
         await this.updateAndInsert({
-          bookInfoId: this.getLastInsertedBookId,
           translatorId: this.translatorId,
           publisherId: this.publisherId,
           authorIdList: authorIdListString,

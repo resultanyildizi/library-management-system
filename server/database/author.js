@@ -1,7 +1,9 @@
 module.exports.register = async ({ sql, getConnection }) => {
-  const selectAllAuthors = async () => {
+  const selectAllAuthors = async ({ orderType }) => {
     const connection = await getConnection();
     const request = connection.request();
+
+    request.input("orderType", sql.INT, orderType);
 
     const result = await request.execute("SP_SelectAllAuthors");
     return result;

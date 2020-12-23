@@ -13,7 +13,7 @@ CREATE PROCEDURE dbo.SP_SelectAuthorById
     @id INT
 AS
 SELECT *
-FROM dbo.[VW_AuthorCountryJoin]
+FROM dbo.[VW_AuthorsJoinedAll]
 WHERE [authorId] = @id
 GO
 -- example to execute the stored procedure we just created

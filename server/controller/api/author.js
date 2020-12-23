@@ -1,4 +1,5 @@
 const Boom = require("@hapi/boom");
+const assert = require("assert");
 const Joi = require("joi");
 
 module.exports.register = (server) => {
@@ -11,6 +12,10 @@ module.exports.register = (server) => {
     }),
     params: Joi.object({
       id: Joi.number().integer().min(1).required(),
+    }),
+    query: Joi.object({
+      name: Joi.string().min(1).max(100).optional(),
+      orderType: Joi.number().integer().allow(null).optional(),
     }),
   };
 
@@ -26,11 +31,12 @@ module.exports.register = (server) => {
           countryId,
         });
 
+        assert(result);
+
         if (result && result.rowsAffected && result.rowsAffected[0] === 1) {
           return h.response().code(201);
-        } else {
-          return Boom.internal();
         }
+        return Boom.internal();
       } catch (err) {
         console.log(err);
         Boom.internal(err);
@@ -41,17 +47,19 @@ module.exports.register = (server) => {
       try {
         const db = server.plugins.sql.client;
 
-        const { name } = req.query;
+        const { name, orderType } = req.query;
 
         const result = await (name
           ? db.author.selectAuthorByNameOrCountry({ name })
-          : db.author.selectAllAuthors());
+          : db.author.selectAllAuthors({ orderType }));
+
+        assert(result);
 
         if (result && result.recordset) {
           return result.recordset;
-        } else {
-          return Boom.internal();
         }
+
+        return Boom.internal();
       } catch (err) {
         console.log(err);
         Boom.internal(err);
@@ -64,9 +72,13 @@ module.exports.register = (server) => {
         const { id } = req.params;
         const result = await db.author.deleteAuthorById({ id });
 
+        assert(result);
+
         if (result && result.rowsAffected && result.rowsAffected[0] === 1) {
           return h.response().code(204);
-        } else return Boom.notFound();
+        }
+
+        return Boom.notFound();
       } catch (err) {
         console.log(err);
         Boom.internal(err);
@@ -79,9 +91,13 @@ module.exports.register = (server) => {
         const { id } = req.params;
         const result = await db.author.selectAuthorById({ id });
 
+        assert(result);
+
         if (result && result.recordset && result.recordset.length > 0) {
           return result.recordset;
-        } else return Boom.notFound();
+        }
+
+        return Boom.notFound();
       } catch (err) {
         console.log(err);
         Boom.internal(err);

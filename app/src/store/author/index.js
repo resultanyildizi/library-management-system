@@ -1,9 +1,10 @@
 import axios from "axios";
-import { setTimeout } from "core-js";
 import slugify from "slugify";
+import router from "../../router";
 const BASE_URL = "http://localhost:5000/api/author";
 const state = {
   authors: [],
+  orderType: 1,
 };
 const getters = {
   getAuthors: (state) => state.authors,
@@ -14,12 +15,16 @@ const getters = {
         return map;
       }, {});
   },
+  getOrderType: (state) => state.orderType,
 };
 const actions = {
-  bindAuthors: async ({ commit, dispatch }) => {
+  bindAuthors: async ({ commit, dispatch, state }) => {
     try {
       const token = localStorage.getItem("token");
       const request = axios.get(BASE_URL, {
+        params: {
+          orderType: state.orderType,
+        },
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
@@ -33,7 +38,8 @@ const actions = {
       );
       if (result && result.data) commit("setAuthors", { authors: result.data });
     } catch (err) {
-      console.log(err);
+      err.message = "In method bindAuthors an error occured: " + err.message;
+      router.push({ name: "Error", params: { error: err } });
     }
   },
 
@@ -41,51 +47,73 @@ const actions = {
     { dispatch },
     { fullName, birthYear, countryId, imageData }
   ) => {
-    try {
-      var image = null;
-      const token = localStorage.getItem("token");
-      if (imageData) {
-        const fileName = `author/${slugify(
-          fullName
-        )}_${Date.now().toString()}.${imageData.name.split(".").pop()}`;
+    var image = null;
+    const token = localStorage.getItem("token");
+    if (imageData) {
+      const fileName = `author/${slugify(
+        fullName
+      )}_${Date.now().toString()}.${imageData.name.split(".").pop()}`;
 
-        image = await dispatch(
-          "uploadImage",
-          { imageData, fileName },
-          { root: true }
-        );
-      }
-      const request = axios.post(
-        BASE_URL,
-        {
-          fullName,
-          birthYear,
-          countryId,
-          image,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
+      image = await dispatch(
+        "uploadImage",
+        { imageData, fileName },
+        { root: true }
       );
+    }
+    const request = axios.post(
+      BASE_URL,
+      {
+        fullName,
+        birthYear,
+        countryId,
+        image,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    const result = await dispatch(
+      "auth/validateAndResponse",
+      { request },
+      { root: true }
+    );
+    if (result && result.status === 201) {
+      dispatch("bindAuthors");
+    }
+  },
+
+  deleteAuthor: async ({ dispatch }, { authorId }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const request = axios.delete(`${BASE_URL}/${authorId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      });
       const result = await dispatch(
         "auth/validateAndResponse",
         { request },
         { root: true }
       );
-      if (result && result.status === 201) {
-        setTimeout(() => {
-          dispatch("bindAuthors");
-        }, 1000);
+      if (result && result.status === 204) {
+        dispatch("bindAuthors");
       }
     } catch (err) {
-      console.log(err);
+      router.push({ name: "Error", params: { error: err } });
     }
+  },
+
+  changeOrderType: async ({ commit, dispatch }, { orderType }) => {
+    commit("setOrderType", { orderType });
+    await dispatch("bindAuthors");
   },
 };
 const mutations = {
   setAuthors: (state, { authors }) => (state.authors = authors),
+  setOrderType: (state, { orderType }) => (state.orderType = orderType),
 };
 export default { namespaced: true, state, getters, actions, mutations };

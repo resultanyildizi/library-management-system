@@ -3,8 +3,10 @@ import VueRouter from "vue-router";
 import store from "@/store";
 
 import Login from "@/views/Login";
+import ErrorPage from "@/views/Error";
 
 import Books from "@/views/Books";
+import Book from "@/views/Book";
 import Authors from "@/views/Authors";
 import Categories from "@/views/Categories";
 import Publishers from "@/views/Publishers";
@@ -12,6 +14,16 @@ import Publishers from "@/views/Publishers";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/error",
+    name: "Error",
+    component: ErrorPage,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      if (!to.params.error) next("/books");
+      else next();
+    },
+  },
   {
     path: "/",
     name: "Home",
@@ -29,6 +41,17 @@ const routes = [
     name: "Books",
     icon: "mdi-book",
     component: Books,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
+      next();
+    },
+  },
+  {
+    path: "/book",
+    name: "Book",
+    component: Book,
     beforeEnter: async (to, from, next) => {
       const validToken = await store.dispatch("auth/validateToken");
       if (!validToken) next("/");

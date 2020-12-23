@@ -1,10 +1,19 @@
-const Joi = require("joi");
 const controller = require("../../controller");
 
 module.exports.register = async (server) => {
   const bookInfoController = controller.register(server).api.bookInfo;
 
   const routes = [
+    {
+      method: "GET",
+      path: "/api/bookInfo",
+      options: {
+        handler: bookInfoController.handlers.getAllBookInfos,
+        validate: {
+          query: bookInfoController.handlers.query,
+        },
+      },
+    },
     {
       method: "POST",
       path: "/api/bookInfo",
@@ -16,17 +25,57 @@ module.exports.register = async (server) => {
       },
     },
     {
-      method: "POST",
-      path: "/api/bookInfo/updateAndInsert",
+      method: "DELETE",
+      path: "/api/bookInfo/{bookInfoId}",
+      options: {
+        handler: bookInfoController.handlers.deleteBookInfo,
+        validate: {
+          params: bookInfoController.schema.params,
+        },
+      },
+    },
+    {
+      method: "PUT",
+      path: "/api/bookInfo/{bookInfoId}",
+      options: {
+        handler: bookInfoController.handlers.updateBookInfo,
+        validate: {
+          payload: bookInfoController.schema.payload,
+          params: bookInfoController.schema.params,
+        },
+      },
+    },
+    {
+      method: "PUT",
+      path: "/api/bookInfo/updateAndInsert/{bookInfoId}",
       options: {
         handler: bookInfoController.handlers.updateAndInsert,
         validate: {
-          payload: Joi.object({
-            bookInfoId: Joi.number().integer().required(),
-            translatorId: Joi.number().integer().allow(null).optional(),
-            publisherId: Joi.number().integer().allow(null).optional(),
-            authorIdList: Joi.string().min(2).optional().allow(null),
-          }),
+          payload: bookInfoController.schema.updateAndInsertPayload,
+          params: bookInfoController.schema.params,
+        },
+      },
+    },
+
+    {
+      method: "PUT",
+      path: "/api/bookInfo/updateScore/{bookInfoId}",
+      options: {
+        handler: bookInfoController.handlers.updateBookInfoScore,
+        validate: {
+          payload: bookInfoController.schema.updateBookInfoScorePayload,
+          params: bookInfoController.schema.params,
+        },
+      },
+    },
+    {
+      method: "PUT",
+      path: "/api/bookInfo/updateCategoryId/{bookInfoId}",
+      options: {
+        handler: bookInfoController.handlers.updateCategoryId,
+        validate: {
+          payload: bookInfoController.schema.updateCategoryIdPayload,
+          params: bookInfoController.schema.params,
         },
       },
     },

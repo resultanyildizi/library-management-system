@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run server and application",
+            "command": "wt -d D:/projects/real_projects/Library-Management-System/app/ cmd /k npm run electron:serve && wt -d D:/projects/real_projects/Library-Management-System/server/ cmd /k npm run dev",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": "build"
+        }
+    ]
+}

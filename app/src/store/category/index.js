@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import router from "../../router";
 const BASE_URL = "http://localhost:5000/api/category";
 const state = {
   categories: [],
@@ -26,37 +26,34 @@ const actions = {
       if (result && result.data)
         commit("setCategories", { categories: result.data });
     } catch (err) {
-      console.log(err);
+      err.message = "In method bindCategories an error occured: " + err.message;
+      router.push({ name: "Error", params: { error: err } });
     }
   },
   addCategory: async ({ dispatch }, { name, parentId }) => {
-    try {
-      const token = localStorage.getItem("token");
-      const request = axios.post(
-        BASE_URL,
-        {
-          name,
-          parentId,
+    const token = localStorage.getItem("token");
+    const request = axios.post(
+      BASE_URL,
+      {
+        name,
+        parentId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        }
-      );
-      const result = await dispatch(
-        "auth/validateAndResponse",
-        { request },
-        { root: true }
-      );
-      if (result && result.status === 201) {
-        setTimeout(() => {
-          dispatch("bindCategories");
-        }, 100);
       }
-    } catch (err) {
-      console.log(err);
+    );
+    const result = await dispatch(
+      "auth/validateAndResponse",
+      { request },
+      { root: true }
+    );
+    if (result && result.status === 201) {
+      setTimeout(() => {
+        dispatch("bindCategories");
+      }, 100);
     }
   },
 

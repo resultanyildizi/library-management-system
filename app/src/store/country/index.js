@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../../router";
 
 const BASE_URL = "http://localhost:5000/api/country";
 
@@ -36,7 +37,8 @@ const actions = {
         return result.data;
       }
     } catch (err) {
-      console.log(err);
+      err.message = "In method bindCountries an error occured: " + err.message;
+      router.push({ name: "Error", params: { error: err } });
     }
   },
 };

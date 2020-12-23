@@ -1,25 +1,12 @@
 <template>
-  <v-stepper-content step="1" class="pa-2 pb-0">
+  <v-stepper-content step="3" class="pa-2 pb-0">
     <v-card max-height="500">
       <v-row>
         <v-col class="px-6">
           <span class="text-h6">Select a category</span>
           <v-radio-group v-model="categoryId">
             <v-radio
-              v-for="leaf in leaves.slice(0, leaves.length / 2)"
-              :key="leaf.item.id"
-              :label="`${leaf.cameFrom} ${leaf.item.name}`"
-              :value="leaf.item.id"
-            ></v-radio>
-          </v-radio-group>
-        </v-col>
-        <v-col class="px-6">
-          <span class="text-h6">---</span>
-          <v-radio-group v-model="categoryId">
-            <v-radio
-              v-for="leaf in leaves.length % 2 === 0
-                ? leaves.slice(leaves.length / 2, leaves.length)
-                : leaves.slice(leaves.length / 2 - 1, leaves.length)"
+              v-for="leaf in leaves"
               :key="leaf.item.id"
               :label="`${leaf.cameFrom} ${leaf.item.name}`"
               :value="leaf.item.id"
@@ -32,7 +19,7 @@
         <v-btn class="mr-2" text @click="categoryId = null"> Reset </v-btn>
         <v-btn
           :loading="loading"
-          @click="_updateAndInsert"
+          @click="_updateCategoryId"
           depressed
           color="primary"
         >
@@ -49,15 +36,24 @@ export default {
   name: "AddBookFormStep3",
   data() {
     return {
+      loading: false,
       leaves: [],
       categoryId: null,
     };
   },
 
-  watch: {},
+  props: {
+    bookInfo: {
+      type: Object,
+    },
+  },
 
   created() {
     this.calculateLeaves(this.categories, "");
+
+    if (this.bookInfo) {
+      this.categoryId = this.bookInfo.categoryId;
+    }
   },
 
   computed: {
@@ -68,7 +64,23 @@ export default {
   },
 
   methods: {
-    ...mapActions("book", ["updateCategory"]),
+    ...mapActions("book", ["updateCategoryId"]),
+
+    async _updateCategoryId() {
+      try {
+        this.loading = true;
+        const { categoryId } = this;
+
+        await this.updateCategoryId({
+          categoryId,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      this.loading = false;
+      this.$emit("nextStep");
+    },
+
     getNodes(items) {
       return items.map((item) => ({
         id: item.categoryId,

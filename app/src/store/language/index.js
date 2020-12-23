@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../../router";
 
 const BASE_URL = "http://localhost:5000/api/language";
 
@@ -33,14 +34,13 @@ const actions = {
         { root: true }
       );
 
-      console.log(result);
-
       if (result && result.data) {
         commit("setLanguages", { languages: result.data });
         return result.data;
       }
     } catch (err) {
-      console.log(err);
+      err.message = "In method languages an error occured: " + err.message;
+      router.push({ name: "Error", params: { error: err } });
     }
   },
 };

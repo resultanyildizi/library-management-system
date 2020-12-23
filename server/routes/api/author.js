@@ -1,4 +1,3 @@
-const Joi = require("joi");
 const controller = require("../../controller");
 
 module.exports.register = async (server) => {
@@ -11,9 +10,7 @@ module.exports.register = async (server) => {
       options: {
         handler: authorController.handlers.getAuthor,
         validate: {
-          query: Joi.object({
-            name: Joi.string().min(1).max(100).optional(),
-          }),
+          query: authorController.schema.query,
         },
       },
     },

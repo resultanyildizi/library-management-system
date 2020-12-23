@@ -1,5 +1,5 @@
 <template>
-  <v-stepper-content step="3" class="pa-2 pb-0">
+  <v-stepper-content step="1" class="pa-2 pb-0">
     <v-form ref="form" v-model="valid">
       <span class="subheader">Name & Language</span>
       <v-row>
@@ -49,8 +49,8 @@
         </v-col>
         <v-col cols="4">
           <v-text-field
-            v-model="pagesCount"
-            :rules="pagesCountRules"
+            v-model="pageCount"
+            :rules="pageCountRules"
             color="secondary"
             label="Pages Count"
             outlined
@@ -96,10 +96,11 @@
         </v-col>
         <v-col cols="6" class="pb-0 mb-0">
           <v-file-input
+            @change="willImageUpdate = true"
             v-model="imageData"
             :rules="imageRules"
             outlined
-            accept="image/png, image/jpeg, image/bmp"
+            accept="image/jpg, image/jpeg"
             prepend-icon="mdi-image"
             label="Select an image"
             dense
@@ -113,7 +114,7 @@
       <v-btn
         :loading="loading"
         :disabled="!valid"
-        @click="_addBook()"
+        @click="_addOrUpdateBook()"
         depressed
         color="primary"
         >Next</v-btn
@@ -128,16 +129,16 @@ import { mapGetters } from "vuex";
 export default {
   name: "AddBookFormStep1",
 
-  watch: {},
   data() {
     return {
       name: null,
       publishYear: null,
       edition: null,
-      pagesCount: null,
+      pageCount: null,
       height: null,
       width: null,
       imageData: null,
+      willImageUpdate: false,
       language: null,
       description: null,
       valid: false,
@@ -155,7 +156,7 @@ export default {
           (v > 0 && v < 9999 && /^\d*$/.test(v)) ||
           "Invalid publish year",
       ],
-      pagesCountRules: [
+      pageCountRules: [
         (v) => !v || (v > 5 && /^\d*$/.test(v)) || "Invalid pages count",
       ],
       editionRules: [
@@ -178,6 +179,31 @@ export default {
       ],
     };
   },
+
+  props: {
+    bookInfo: {
+      type: Object,
+    },
+  },
+
+  created() {
+    if (this.bookInfo) {
+      this.name = this.bookInfo.name;
+      this.language = this.bookInfo.languageName;
+      this.publishYear = this.bookInfo.publishYear
+        ? this.bookInfo.publishYear.substring(0, 4)
+        : null;
+      this.edition = this.bookInfo.edition;
+      this.pageCount = this.bookInfo.pageCount;
+      this.description = this.bookInfo.description;
+      this.imageData = this.bookInfo.image
+        ? new File([""], this.bookInfo.image)
+        : null;
+      this.width = this.bookInfo.width;
+      this.height = this.bookInfo.height;
+    }
+  },
+
   computed: {
     ...mapGetters("language", ["getLanguageNames"]),
     ...mapGetters("language", ["getLanguageMap"]),
@@ -185,39 +211,30 @@ export default {
   },
 
   methods: {
-    ...mapActions("book", ["addBook"]),
-    async _addBook() {
-      this.loading = true;
-      console.log(this.valid);
-      if (this.valid) {
-        const {
-          name,
-          publishYear,
-          edition,
-          pagesCount,
-          height,
-          width,
-          imageData,
-          language,
-          description,
-        } = this;
+    ...mapActions("book", ["addOrUpdateBook"]),
+    async _addOrUpdateBook() {
+      try {
+        this.loading = true;
+        if (this.valid) {
+          await this.addOrUpdateBook({
+            bookInfoId: this.bookInfo ? this.bookInfo.bookInfoId : null,
+            name: this.name,
+            publishYear: this.publishYear,
+            edition: this.edition,
+            pageCount: this.pageCount,
+            height: this.height,
+            width: this.width,
+            imageData: this.imageData,
+            languageId: this.getLanguageMap[this.language],
+            description: this.description,
+          });
 
-        await this.addBook({
-          name,
-          publishYear,
-          edition,
-          pagesCount,
-          height,
-          width,
-          imageData,
-          languageId: this.getLanguageMap[language],
-          description,
-        });
-
-        this.$emit("nextStep");
-        this.loading = false;
-        console.log(this.getLastInsertedBookId);
+          this.$emit("nextStep");
+        }
+      } catch (err) {
+        console.log(err);
       }
+      this.loading = false;
     },
 
     resetForm() {

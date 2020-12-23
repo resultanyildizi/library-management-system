@@ -17,3 +17,7 @@ CREATE TABLE dbo.Category
     [name] [NVARCHAR](50) NOT NULL,
 );
 GO
+
+
+SELECT *
+FROM dbo.[Category]

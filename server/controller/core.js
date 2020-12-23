@@ -2,7 +2,11 @@ const fup = require("../services/fileUploader.service");
 const path = require("path");
 const Boom = require("@hapi/boom");
 
-const UPLOAD_PATH = path.join(__dirname, "../../", "/app/upload/img");
+const UPLOAD_PATH = path.join(
+  __dirname,
+  "../../",
+  "/app/src/assets/upload/img"
+);
 
 module.exports.register = (server) => {
   const handlers = {

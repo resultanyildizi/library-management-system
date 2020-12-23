@@ -14,10 +14,10 @@ CREATE PROCEDURE dbo.SP_SelectPublisherById
 -- selects a publisher by name
 AS
 SELECT *
-FROM dbo.[Publisher]
+FROM dbo.[VW_PublishersJoinedAll]
 WHERE [publisherId] = @id 
 GO
 
 
-EXECUTE dbo.SP_SelectPublisherById @id = 1000
+EXECUTE dbo.SP_SelectPublisherById @id = 1014
 GO

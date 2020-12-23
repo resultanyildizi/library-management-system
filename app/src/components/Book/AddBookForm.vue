@@ -11,7 +11,7 @@
         </v-btn>
       </v-toolbar>
       <v-card-text class="px-6 pt-3">
-        <v-stepper v-model="e1" class="elevation-0">
+        <v-stepper v-model="e1" class="elevation-0" v-if="dialog">
           <v-stepper-header class="elevation-0">
             <v-stepper-step :complete="e1 > 1" step="1"> Book </v-stepper-step>
             <v-divider></v-divider>
@@ -23,9 +23,21 @@
           </v-stepper-header>
 
           <v-stepper-items>
-            <add-book-form-step-1 ref="step1Content" v-on:nextStep="e1 = 2" />
-            <add-book-form-step-2 ref="step2Content" v-on:nextStep="e1 = 3" />
-            <add-book-form-step-3 ref="step3Content" />
+            <add-book-form-step-1
+              ref="step1Content"
+              v-on:nextStep="e1 = 2"
+              :bookInfo="bookInfo"
+            />
+            <add-book-form-step-2
+              ref="step2Content"
+              v-on:nextStep="e1 = 3"
+              :bookInfo="bookInfo"
+            />
+            <add-book-form-step-3
+              ref="step3Content"
+              v-on:nextStep="dialog = false"
+              :bookInfo="bookInfo"
+            />
           </v-stepper-items>
         </v-stepper>
       </v-card-text>
@@ -42,6 +54,7 @@ export default {
   name: "AddBookForm",
   data() {
     return {
+      bookInfo: null,
       e1: 1,
       dialog: false,
       notifications: false,
@@ -50,10 +63,13 @@ export default {
     };
   },
 
+  created() {},
+
   watch: {
     dialog(val) {
       if (!val) {
         this.e1 = 1;
+        this.bookInfo = null;
         this.$refs.step1Content.resetForm();
       }
     },
@@ -64,55 +80,3 @@ export default {
 <style >
 </style>
 
-
-
-/*
- items: [
-        {
-          id: "123",
-          name: "Deneme",
-          children: [
-            {
-              id: "345",
-              name: "Kokop",
-              children: [],
-            },
-          ],
-        },
-        {
-          id: "123",
-          name: "Deneme",
-          children: [
-            {
-              id: "345",
-              name: "Kokop",
-              children: [
-                {
-                  id: "123",
-                  name: "Deneme",
-                  children: [
-                    {
-                      id: "345",
-                      name: "Kokop",
-                      children: [
-                        {
-                          id: "123",
-                          name: "Deneme",
-                          children: [
-                            {
-                              id: "345",
-                              name: "Kokop",
-                              children: [],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-*/

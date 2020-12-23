@@ -58,7 +58,7 @@
                   v-model="imageData"
                   :rules="imageRules"
                   outlined
-                  accept="image/png, image/jpeg, image/bmp"
+                  accept="image/jpg, image/jpeg"
                   prepend-icon="mdi-image"
                   label="Select an image"
                   dense

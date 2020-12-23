@@ -1,4 +1,5 @@
 const Boom = require("@hapi/boom");
+const assert = require("assert");
 
 module.exports.register = (server) => {
   const handlers = {
@@ -6,6 +7,9 @@ module.exports.register = (server) => {
       try {
         const db = server.plugins.sql.client;
         const result = await db.country.selectAllCountries();
+
+        assert(result);
+
         if (result && result.recordset) return result.recordset;
 
         return Boom.internal();

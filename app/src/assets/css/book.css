@@ -52,7 +52,6 @@ a {
   display: inline-block;
   text-transform: uppercase;
   border: 2px solid #2c3e50;
-  margin-top: 100px;
   font-size: 0.7em;
   font-weight: 700;
   padding: 0.1em 0.4em;
@@ -714,12 +713,20 @@ figcaption {
 }
 
 figcaption h1 {
+  font-size: 1.6rem;
   margin: 0;
+  margin-top: -10px;
 }
 
 figcaption span {
   color: #16a085;
-  padding: 0.6em 0 1em 0;
+  padding: 0.6em 0 0 0;
+  display: block;
+}
+
+figcaption .append {
+  color: #16a085;
+  padding: 0 0 0 0;
   display: block;
 }
 
