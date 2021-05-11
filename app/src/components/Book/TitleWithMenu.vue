@@ -44,7 +44,7 @@ export default {
         { title: "Order by category name", value: 2 },
         { title: "Order by author names", value: 3 },
         { title: "Order by pages count ", value: 4 },
-        { title: "Order by pages score", value: 5 },
+        { title: "Order by score", value: 5 },
       ],
     };
   },

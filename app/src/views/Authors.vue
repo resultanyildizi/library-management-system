@@ -20,13 +20,15 @@
 </template>
 
 <script>
-import CircularProgress from "@/components/Core/CircularProgress";
-import AuthorList from "../components/Author/AuthorList.vue";
-import FloatingActionButton from "../components/Core/FloatingActionButton.vue";
 import AddAuthorForm from "../components/Author/AddAuthorForm";
-import { mapActions, mapGetters } from "vuex";
+import AuthorList from "../components/Author/AuthorList.vue";
+import CircularProgress from "@/components/Core/CircularProgress";
+import FloatingActionButton from "../components/Core/FloatingActionButton.vue";
 import TitleWithMenu from "../components/Author/TitleWithMenu.vue";
 import DeleteAuthorDialog from "../components/Author/DeleteAuthorDialog.vue";
+
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "Authors",
   components: {

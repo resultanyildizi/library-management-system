@@ -6,8 +6,8 @@ GO
 -- Create the table in the specified schema
 CREATE TABLE dbo.[Admin]
 (
-    [adminId] INT NOT NULL PRIMARY KEY IDENTITY(3000, 1),
     -- primary key column
+    [adminId] INT NOT NULL PRIMARY KEY IDENTITY(3000, 1),
     [email] NVARCHAR(60) NOT NULL UNIQUE ,
     [hashedPassword] NVARCHAR (100) NOT NULL
 );

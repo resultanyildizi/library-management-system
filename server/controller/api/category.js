@@ -58,7 +58,7 @@ module.exports.register = (server) => {
 
         assert(result);
 
-        if (result && result.rowsAffected > 0) {
+        if (result && result.rowsAffected && result.rowsAffected[0] === 1) {
           return h.response().code(201);
         }
         return Boom.internal();
@@ -76,7 +76,7 @@ module.exports.register = (server) => {
 
         assert(result);
 
-        if (result && result.rowsAffected > 0) {
+        if (result && result.rowsAffected && result.rowsAffected[0] === 1) {
           return h.response().code(204);
         }
         return Boom.internal();

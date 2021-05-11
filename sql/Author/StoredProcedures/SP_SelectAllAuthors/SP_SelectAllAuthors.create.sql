@@ -10,7 +10,7 @@ DROP PROCEDURE dbo.SP_SelectAllAuthors
 GO
 -- Create the stored procedure in the specified schema
 CREATE PROCEDURE dbo.SP_SelectAllAuthors
-    @orderType INT = 1
+    @orderType INT = 2
 AS
 -- body of the stored procedure
 SELECT *

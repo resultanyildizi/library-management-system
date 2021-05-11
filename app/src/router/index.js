@@ -8,8 +8,11 @@ import ErrorPage from "@/views/Error";
 import Books from "@/views/Books";
 import Book from "@/views/Book";
 import Authors from "@/views/Authors";
+import Author from "@/views/Author";
 import Categories from "@/views/Categories";
 import Publishers from "@/views/Publishers";
+import Publisher from "@/views/Publisher";
+import States from "@/views/States";
 
 Vue.use(VueRouter);
 
@@ -59,6 +62,28 @@ const routes = [
       next();
     },
   },
+  {
+    path: "/publisher",
+    name: "Publisher",
+    component: Publisher,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
+      next();
+    },
+  },
+  {
+    path: "/author",
+    name: "Author",
+    component: Author,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
+      next();
+    },
+  },
 
   {
     path: "/publishers",
@@ -90,6 +115,18 @@ const routes = [
     name: "Categories",
     icon: "mdi-view-grid",
     component: Categories,
+    beforeEnter: async (to, from, next) => {
+      const validToken = await store.dispatch("auth/validateToken");
+      if (!validToken) next("/");
+
+      next();
+    },
+  },
+  {
+    path: "/states",
+    name: "States",
+    component: States,
+    icon: "mdi-lightbulb",
     beforeEnter: async (to, from, next) => {
       const validToken = await store.dispatch("auth/validateToken");
       if (!validToken) next("/");

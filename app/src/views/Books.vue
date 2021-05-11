@@ -1,9 +1,10 @@
 <template>
-  <section>
+  <section style="height: 100%">
     <add-book-form ref="addBookForm" />
     <delete-book-dialog ref="deleteBookDialog" />
     <!-- Top Navigation -->
-    <v-container class="px-lg-16">
+    <circular-progress v-if="loading" />
+    <v-container class="px-lg-16" v-else>
       <floating-action-button
         :icon="'mdi-plus'"
         :text="'Add new Book'"
@@ -13,8 +14,10 @@
       <title-with-menu />
       <v-divider class="my-4 mb-6"></v-divider>
       <book-list
+        :bookInfos="getBookInfos"
         v-on:updateBookDialog="updateBookDialog"
         v-on:deleteBookDialog="deleteBookDialog"
+        :updateable="true"
       />
     </v-container>
   </section>
@@ -28,6 +31,7 @@ import AddBookForm from "../components/Book/AddBookForm.vue";
 import BookList from "../components/Book/BookList.vue";
 import DeleteBookDialog from "../components/Book/DeleteBookDialog.vue";
 import TitleWithMenu from "../components/Book/TitleWithMenu.vue";
+import CircularProgress from "../components/Core/CircularProgress";
 export default {
   name: "Books",
 
@@ -37,6 +41,12 @@ export default {
     BookList,
     DeleteBookDialog,
     TitleWithMenu,
+    CircularProgress,
+  },
+  data() {
+    return {
+      loading: false,
+    };
   },
   methods: {
     ...mapActions("language", ["bindLanguages"]),
@@ -44,6 +54,7 @@ export default {
     ...mapActions("publisher", ["bindPublishers"]),
     ...mapActions("category", ["bindCategories"]),
     ...mapActions("book", ["bindBookInfos"]),
+    ...mapActions("state", ["bindStates"]),
 
     updateBookDialog(e) {
       this.$refs.addBookForm.dialog = true;
@@ -64,12 +75,15 @@ export default {
     ...mapGetters("book", ["getBookInfos"]),
   },
 
-  created() {
-    this.bindLanguages();
-    this.bindAuthors();
-    this.bindPublishers();
-    this.bindCategories();
-    this.bindBookInfos();
+  async created() {
+    this.loading = true;
+    await this.bindBookInfos({ authorId: null, publisherId: null });
+    this.loading = false;
+    await this.bindLanguages();
+    await this.bindAuthors();
+    await this.bindPublishers();
+    await this.bindCategories();
+    await this.bindStates();
   },
 };
 </script>

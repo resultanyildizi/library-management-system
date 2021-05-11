@@ -2,9 +2,9 @@
   <v-hover v-slot="{ hover }" open-delay="200">
     <div class="card">
       <v-btn v-if="hover" class="deleteBtn" icon @click="openDeleteDialog">
-        <v-icon color="primary"> mdi-delete </v-icon>
+        <v-icon light color="secondary" size="25"> mdi-delete </v-icon>
       </v-btn>
-      <div class="card-image">
+      <div class="card-image" @click="authorPage">
         <img :src="getImage" alt="profile one" />
       </div>
 
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "AuthorCard",
   props: {
@@ -44,11 +45,16 @@ export default {
   },
 
   methods: {
+    ...mapActions("author", ["selectAuthor"]),
     openDeleteDialog() {
       this.$emit("openDeleteDialog", {
         fullName: this.author.fullName,
         authorId: this.author.authorId,
       });
+    },
+    authorPage() {
+      this.selectAuthor({ author: this.author });
+      this.$router.push({ name: "Author" });
     },
   },
   computed: {
@@ -73,8 +79,8 @@ export default {
 
 .deleteBtn {
   position: absolute;
-  top: 0;
-  right: 5px;
+  top: 10px;
+  right: 15px;
   z-index: 9999;
 }
 </style>

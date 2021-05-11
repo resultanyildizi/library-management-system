@@ -4,7 +4,8 @@ import router from "../../router";
 const BASE_URL = "http://localhost:5000/api/author";
 const state = {
   authors: [],
-  orderType: 1,
+  author: null,
+  orderType: 2,
 };
 const getters = {
   getAuthors: (state) => state.authors,
@@ -15,6 +16,7 @@ const getters = {
         return map;
       }, {});
   },
+  getAuthor: (state) => state.author,
   getOrderType: (state) => state.orderType,
 };
 const actions = {
@@ -107,6 +109,10 @@ const actions = {
     }
   },
 
+  selectAuthor({ commit }, { author }) {
+    commit("setAuthor", { author });
+  },
+
   changeOrderType: async ({ commit, dispatch }, { orderType }) => {
     commit("setOrderType", { orderType });
     await dispatch("bindAuthors");
@@ -114,6 +120,7 @@ const actions = {
 };
 const mutations = {
   setAuthors: (state, { authors }) => (state.authors = authors),
+  setAuthor: (state, { author }) => (state.author = author),
   setOrderType: (state, { orderType }) => (state.orderType = orderType),
 };
 export default { namespaced: true, state, getters, actions, mutations };

@@ -10,18 +10,19 @@
   <h3 align="center">NRT Library Management System</h3>
 
   <p align="center">
-    An awesome Library Management System to organize your library
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
+  Kişisel kütüphanenizi organize etmeniz için geliştirilmiş bir kütüphane yönetim sistemi
+    <br />   
   </p>
 </p>
 
 <!-- TABLE OF CONTENTS -->
 
-## Table of Contents
+## İçerik tablosu
 
-- [About the Project](#about-the-project)
+- [Geliştirici Hakkında](#geliştirici-hakkında)
+- [Proje Hakkında](#proje-hakkında)
+  - [Modeller](#modeller)
+    - [Kitaplar](#kitaplar)
   - [Entity-Relationship Diagram](#entity-relationship-diagram)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
@@ -30,13 +31,47 @@
 - [Contributing](#contributing)
 - [License](#license)
 
+<!-- GELİŞTİRİCİ HAKKINDA -->
+
+## Geliştirici Hakkında
+
+<a href="https://linkedin.com/in/nurettin-resul-a3a0141a7">
+<div>
+<div style="display: flex; justify-content: center; align-items: center">
+<img style="margin: auto" src="images/profile_circle.png" width="250" height="250">
+</div>
+<p style="margin-top: 20px; text-align: center; font-weight:bold">Nurettin Resul Tanyıldızı</p>
+</div>
+</a>
+
+NRT Library Management System [Nurettin Resul Tanyıldızı][linkedin-url] tarafından geliştirilmiştir.
+
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+## Proje Hakkında
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+NRT Library Management System bir kişisel kütüphane yönetim sistemidir. Bu sistem sayesinde kişiler, kendileri adına oluşturdukları kütüphanelerine, düzenli, estetik ve modern bir biçimde istedikleri kitapları ekleyebilir ve kütüphanelerini kolaylıkla yönetebilirler.
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
+- NRT Library Management System kütüphanesini dijital ortamda oluşturmak isteyen insanlara eğlenceli bir deneyim sunar.
+- Estetik ve kullanıcı dostu arayüzü sayesinde kişiler kütüphanelerini yönetirken asla zorlanmaz ve aradıklarını kolaylıkla bulabilirler.
+
+Sistem başlıca beş farklı yapıdan/modelden oluşmaktadır. Kullanıcılar bu yapıları/modelleri istedikleri şekilde yönetebilirler.
+
+### Modeller
+
+#### Kitaplar
+
+- Kitaplar bir kütüphanenin olmazsa olmazıdır. NRT LMS ile kütüphanenize kullanıcılar istedikleri kitabı kütüphanelerine kolaylıkla ekleyebilir, güncelleyebilir ve silebilirler.
+
+- Kitaplar, **isim**, **dil**, **yayınlama tarihi**, **baskı sayısı**, **sayfa sayısı**, **kitap açıklaması**, **kitap boyutları (yükseklik ve genişlik)**, **kapak resmi** gibi başlıca bilgiler barındırırlar. Bu sayede kullanıcılar kütüphanelerine ekledikleri kitaplar hakkında detaylı bilgiler edinebilirler. Bu bilgilerden yalnızca **kitap ismi**ni girmek sistem tarafından zorunlu tutulmaktadır. Diğer tüm bilgiler kullanıcıların isteğine göre tamamen ya da daha sonra değiştirilmek üzere boş bırakılabilirler.
+- Bu bilgilerin yanı sıra, kitaplara, **yazar** veya **yazarlar**, varsa **çevirmen**, yayımlandığı **yayınevi** ve **kategori** gibi ek bilgiler de eklenebilmektedir. Önceden bahsedilen diğer bilgiler gibi bu bilgilerin de hiçbirinin eklenmesi zorunlu değildir. Bir kitabı eklemek için gereken tek bilgi kitabın ismidir. Bu sayede kitap eklemek çok kolaydır ve kitaplar rahatlıkla güncellenebildiği için kullanıcılar eklemek istedikleri herhangi bir bilgiyi daha sonra da ekleyebilirler.
+- Kullanıcılar kitapları beğenisine göre değerlendirebilsin diye, her kitapla ilişkilendirilmiş bir **skor** değeri vardır. Bu skor değeri sıfır ile beş arasında değişmektedir ve tüm kitapların skorları varsayılan olarak sıfırdır. Kullanıcılar istedikleri zaman kitaplarının skorlarını değiştirebilir ve beğendikleri kitapları ön plana çıkarabilirler.
+
+#### Notlar
+
+- Yazarlar
+- Yayın evleri
+- Kategoriler
 
 Here's why:
 
@@ -95,3 +130,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-grey
 [linkedin-url]: https://linkedin.com/in/nurettin-resul-a3a0141a7
 [erd-screenshot]: images/nrt-lms-erd.png
+[developer-image]: images/profile_circle.png

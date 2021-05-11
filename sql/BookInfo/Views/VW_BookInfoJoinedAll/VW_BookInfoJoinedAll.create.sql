@@ -20,7 +20,8 @@ AS
         [authorIds],
         [publisherName],
         [categoryName],
-        [languageName]
+        [languageName],
+        [stateName]
     FROM [VW_BookInfos] AS BI
         LEFT JOIN [VW_BookInfo_Join_Publisher] AS BI_J_P
         ON BI.[bookInfoId] = BI_J_P.[bookInfoId]
@@ -32,4 +33,6 @@ AS
         ON BI.[bookInfoId] = BI_J_BI_A.[bookInfoId]
         LEFT JOIN [VW_BookInfo_Join_Language] AS BI_J_L
         ON BI.[bookInfoId] = BI_J_L.[bookInfoId]
+        LEFT JOIN [VW_BookInfo_Join_State] AS BI_J_S
+        ON BI.[bookInfoId] = BI_J_S.[bookInfoId]
 GO

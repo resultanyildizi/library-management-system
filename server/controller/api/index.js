@@ -4,7 +4,8 @@ const country = require("./country");
 const language = require("./language");
 const category = require("./category");
 const bookInfo = require("./bookInfo");
-
+const bookMark = require("./bookMark");
+const state = require("./state");
 module.exports.register = (server) => {
   return {
     publisher: publisher.register(server),
@@ -13,5 +14,7 @@ module.exports.register = (server) => {
     language: language.register(server),
     category: category.register(server),
     bookInfo: bookInfo.register(server),
+    bookMark: bookMark.register(server),
+    state: state.register(server),
   };
 };

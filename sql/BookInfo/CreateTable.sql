@@ -36,10 +36,14 @@ CREATE TABLE dbo.BookInfo
 GO
 
 
-ALTER TABLE dbo.BookInfo
-ALTER COLUMN [score] INT NOT NULL
-
 CREATE INDEX [IX_BookInfo_Name] ON dbo.[BookInfo]([name])
+
+
+ALTER TABLE dbo.BookInfo
+DROP [stateId]
+
+ALTER TABLE dbo.BookInfo
+ADD [stateId] INT NULL FOREIGN KEY([stateId]) REFERENCES dbo.State([stateId]) ON DELETE CASCADE
 
 
 SELECT *

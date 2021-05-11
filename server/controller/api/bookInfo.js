@@ -23,6 +23,8 @@ module.exports.register = (server) => {
     }),
     query: Joi.object({
       orderType: Joi.number().integer().allow(null).optional(),
+      publisherId: Joi.number().integer().allow(null).optional(),
+      authorId: Joi.number().integer().allow(null).optional(),
     }),
 
     updateAndInsertPayload: Joi.object({
@@ -37,6 +39,9 @@ module.exports.register = (server) => {
 
     updateBookInfoScorePayload: Joi.object({
       score: Joi.number().integer().required(),
+    }),
+    updateBookInfoStatePayload: Joi.object({
+      stateId: Joi.number().integer().optional().allow(null),
     }),
   };
 
@@ -157,8 +162,18 @@ module.exports.register = (server) => {
     getAllBookInfos: async (req, h) => {
       try {
         const db = server.plugins.sql.client;
-        const { orderType } = req.query;
-        const result = await db.bookInfo.selectAllBookInfos({ orderType });
+        const { orderType, authorId, publisherId } = req.query;
+        let result;
+
+        if (authorId) {
+          result = await db.bookInfo.selectBookInfosByAuthorId({ authorId });
+        } else if (publisherId) {
+          result = await db.bookInfo.selectBookInfosByPublisherId({
+            publisherId,
+          });
+        } else {
+          result = await db.bookInfo.selectAllBookInfos({ orderType });
+        }
 
         assert(result);
 
@@ -205,7 +220,29 @@ module.exports.register = (server) => {
         assert.ok(result);
 
         if (result && result.rowsAffected && result.rowsAffected[0] === 1) {
-          return h.response(result).code(204);
+          return h.response(result).code(200);
+        }
+
+        return Boom.notFound("No result or no rows affected", result);
+      } catch (err) {
+        console.error(err);
+        return Boom.internal(err);
+      }
+    },
+    updateBookInfoState: async (req, h) => {
+      try {
+        const db = server.plugins.sql.client;
+        const { bookInfoId } = req.params;
+        const { stateId } = req.payload;
+        const result = await db.bookInfo.updateBookInfoState({
+          bookInfoId,
+          stateId,
+        });
+
+        assert.ok(result);
+
+        if (result && result.rowsAffected && result.rowsAffected[0] === 1) {
+          return h.response(result).code(200);
         }
 
         return Boom.notFound("No result or no rows affected", result);

@@ -9,6 +9,8 @@ import country from "./country";
 import category from "./category";
 import book from "./book";
 import language from "./language";
+import bookMark from "./bookMark";
+import state from "./state";
 
 Vue.use(Vuex);
 
@@ -45,12 +47,14 @@ export default new Vuex.Store({
     },
   },
   modules: {
+    book,
     auth,
     author,
-    category,
     country,
-    publisher,
-    book,
+    category,
+    bookMark,
     language,
+    publisher,
+    state,
   },
 });

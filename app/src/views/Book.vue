@@ -1,8 +1,9 @@
 <template>
   <section v-if="bookInfo">
     <add-book-form ref="addBookForm" />
+    <add-book-mark-form ref="addBookMarkForm" />
     <delete-book-dialog ref="deleteBookDialog" />
-    <v-container class="pt-12 px-lg-6 px-xl-16">
+    <v-container class="px-lg-6 px-xl-16">
       <h1 class="mb-2">
         {{ bookInfo.name }} -
         {{ bookInfo.authorNames }}
@@ -16,17 +17,25 @@
           v-model="bookInfo.score"
         >
         </v-rating>
+        <state-select
+          class="ml-4"
+          :selectedState="bookInfo.stateId"
+          :bookInfoId="bookInfo.bookInfoId"
+        />
         <v-spacer></v-spacer>
         <div>
-          <v-btn class="ml-4" color="#16a085" @click="refreshBookInfo" dark
-            >Refresh<v-icon right>mdi-refresh</v-icon></v-btn
-          >
-          <v-btn class="ml-4" color="secondary" @click="updateBookDialog"
-            >Update <v-icon right>mdi-pen</v-icon></v-btn
-          >
-          <v-btn class="ml-4" color="primary" @click="deleteBookDialog"
-            >Delete<v-icon right>mdi-delete</v-icon></v-btn
-          >
+          <v-btn class="ml-4" color="#16a085" @click="refreshBookInfo" dark>
+            Refresh
+            <v-icon right>mdi-refresh</v-icon>
+          </v-btn>
+          <v-btn class="ml-4" color="secondary" @click="updateBookDialog">
+            Update
+            <v-icon right>mdi-pen</v-icon>
+          </v-btn>
+          <v-btn class="ml-4" color="primary" @click="deleteBookDialog">
+            Delete
+            <v-icon right>mdi-delete</v-icon>
+          </v-btn>
         </div>
       </div>
       <v-row>
@@ -47,7 +56,7 @@
           </div>
           <div class="secondary--text">
             <div class="google-sans-regular">
-              * Pages: {{ bookInfo.pageCount }}
+              * Pages: {{ bookInfo.vpageCount }}
             </div>
             <div class="google-sans-regular">
               * Dimensions: {{ bookInfo.dimensions }}
@@ -63,7 +72,7 @@
         <v-col cols="7" class="pt-4">
           <h4><i>Description</i></h4>
           <div class="google-sans-regular font-italic">
-            {{ bookInfo.description }}
+            {{ bookInfo.description ? bookInfo.description : "..." }}
           </div>
         </v-col>
         <v-col cols="2" class="d-flex justify-end pt-4">
@@ -72,18 +81,37 @@
         </v-col>
       </v-row>
       <v-divider class="my-2 mb-6"></v-divider>
+      <div class="d-flex align-end">
+        <h1 class="ma-0">Bookmarks</h1>
+        <v-spacer></v-spacer>
+        <div>
+          <v-btn class="ml-4" color="info" @click="addNewNote" dark>
+            Add new bookmark
+            <v-icon right>mdi-plus</v-icon>
+          </v-btn>
+        </div>
+      </div>
+      <book-mark-list class="mt-6" />
     </v-container>
   </section>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import AddBookForm from "../components/Book/AddBookForm.vue";
+import BookMarkList from "../components/BookMark/BookMarkList.vue";
 import DeleteBookDialog from "../components/Book/DeleteBookDialog.vue";
+import AddBookMarkForm from "../components/BookMark/AddBookMarkForm.vue";
+import StateSelect from "../components/State/StateSelect.vue";
 export default {
   name: "Book",
-  components: { AddBookForm, DeleteBookDialog },
+  components: {
+    AddBookForm,
+    DeleteBookDialog,
+    AddBookMarkForm,
+    BookMarkList,
+    StateSelect,
+  },
   data() {
     return {
       bookInfo: null,
@@ -108,9 +136,17 @@ export default {
   },
   mounted() {
     this.bookInfo = this.getBookInfo;
+    if (!this.bookInfo) this.$router.push({ name: "Books" });
+    else {
+      if (this.getBookInfo.bookInfoId) {
+        this.bindBookMarks({ bookInfoId: this.getBookInfo.bookInfoId });
+      }
+    }
   },
   methods: {
     ...mapActions("book", ["updateScore"]),
+    ...mapActions("bookMark", ["bindBookMarks"]),
+
     updateBookDialog() {
       this.$refs.addBookForm.dialog = true;
       this.$refs.addBookForm.bookInfo = this.bookInfo;
@@ -126,6 +162,13 @@ export default {
       this.$refs.deleteBookDialog.dialog = true;
       this.$refs.deleteBookDialog.name = this.bookInfo.name;
       this.$refs.deleteBookDialog.bookInfoId = this.bookInfo.bookInfoId;
+    },
+
+    addNewNote() {
+      this.$refs.addBookMarkForm.dialog = true;
+      this.$refs.addBookMarkForm.bookInfoId = this.bookInfo.bookInfoId;
+      console.log(this.bookInfo.pageCount);
+      this.$refs.addBookMarkForm.maxPage = this.bookInfo.pageCount;
     },
   },
   computed: {

@@ -134,14 +134,52 @@ module.exports.register = async ({ sql, getConnection }) => {
       console.log(err);
     }
   };
+  const updateBookInfoState = async ({ bookInfoId, stateId }) => {
+    try {
+      const connection = await getConnection();
+      const request = connection.request();
+      request.input("bookInfoId", sql.INT, bookInfoId);
+      request.input("stateId", sql.INT, stateId);
+      const result = await request.execute("SP_UpdateBookInfoState");
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const selectBookInfosByAuthorId = async ({ authorId }) => {
+    try {
+      const connection = await getConnection();
+      const request = connection.request();
+      request.input("authorId", sql.INT, authorId);
+      const result = await request.execute("SP_SelectBookInfosByAuthorId");
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const selectBookInfosByPublisherId = async ({ publisherId }) => {
+    try {
+      const connection = await getConnection();
+      const request = connection.request();
+      request.input("publisherId", sql.INT, publisherId);
+      const result = await request.execute("SP_SelectBookInfosByPublisherId");
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     insertBookInfo,
+    updateBookInfo,
+    deleteBookInfo,
     updateAndInsert,
     updateCategoryId,
     selectAllBookInfos,
-    updateBookInfo,
-    deleteBookInfo,
     updateBookInfoScore,
+    updateBookInfoState,
+    selectBookInfosByAuthorId,
+    selectBookInfosByPublisherId,
   };
 };

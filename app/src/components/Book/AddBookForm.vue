@@ -3,7 +3,7 @@
     <v-card style="cursor: initial">
       <v-toolbar elevation="1" color="secondary" dark>
         <v-toolbar-title class="google-sans-regular">
-          Add new book
+          {{ bookInfo ? "Update book" : "Add new book" }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="dialog = false">

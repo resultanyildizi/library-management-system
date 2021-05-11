@@ -29,11 +29,11 @@
           }}</span>
 
           <v-divider class="my-2"></v-divider>
-          <a class="btn" @click="_updateBook">Update</a>
+          <a :style="getVisibility" class="btn" @click="_updateBook">Update</a>
           <br />
           <a class="btn" @click="_openBook">Open</a>
           <br />
-          <a class="btn" @click="_deleteBook">Delete</a>
+          <a :style="getVisibility" class="btn" @click="_deleteBook">Delete</a>
           <v-divider class="my-2"></v-divider>
           <div class="caption secondary--text">Score</div>
           <v-rating
@@ -91,7 +91,7 @@ export default {
 
   watch: {
     score(newVal, oldVal) {
-      if (newVal !== oldVal && newVal) {
+      if (newVal !== oldVal && newVal && oldVal) {
         this.updateScore({
           bookInfoId: this.bookInfo.bookInfoId,
           score: newVal,
@@ -123,10 +123,18 @@ export default {
         return require("@/assets/upload/img/book/default_book_cover.jpg");
       }
     },
+
+    getVisibility() {
+      return this.updateable ? "visibility: visible" : "visibility: hidden";
+    },
   },
   props: {
     bookInfo: {
       type: Object,
+      required: true,
+    },
+    updateable: {
+      type: Boolean,
       required: true,
     },
   },

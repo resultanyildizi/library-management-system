@@ -2,7 +2,7 @@
   <ul>
     <v-row jutify="center">
       <v-col
-        v-for="bookInfo in getBookInfos"
+        v-for="bookInfo in bookInfos"
         :key="bookInfo.bookInfoId"
         md="6"
         xl="4"
@@ -11,6 +11,7 @@
         <book
           :bookInfo="bookInfo"
           :style="{ 'padding-left': responsivePadding }"
+          :updateable="updateable"
           v-on:updateBookDialog="updateBookDialog"
           v-on:deleteBookDialog="deleteBookDialog"
         />
@@ -20,15 +21,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import Book from "@/components/Book/Book";
 export default {
   name: "BookList",
   components: {
     Book,
   },
+  props: {
+    bookInfos: {
+      type: Array,
+      required: true,
+    },
+    updateable: {
+      type: Boolean,
+      required: true,
+    },
+  },
   computed: {
-    ...mapGetters("book", ["getBookInfos"]),
     responsivePadding() {
       switch (this.$vuetify.breakpoint.name) {
         case "lg":

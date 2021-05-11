@@ -70,6 +70,17 @@ module.exports.register = async (server) => {
     },
     {
       method: "PUT",
+      path: "/api/bookInfo/updateState/{bookInfoId}",
+      options: {
+        handler: bookInfoController.handlers.updateBookInfoState,
+        validate: {
+          payload: bookInfoController.schema.updateBookInfoStatePayload,
+          params: bookInfoController.schema.params,
+        },
+      },
+    },
+    {
+      method: "PUT",
       path: "/api/bookInfo/updateCategoryId/{bookInfoId}",
       options: {
         handler: bookInfoController.handlers.updateCategoryId,

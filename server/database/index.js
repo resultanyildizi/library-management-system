@@ -7,6 +7,8 @@ const country = require("./country");
 const category = require("./category");
 const bookInfo = require("./bookInfo");
 const language = require("./language");
+const bookMark = require("./bookMark");
+const state = require("./state");
 
 const client = async (server, config) => {
   let pool = null;
@@ -47,6 +49,8 @@ const client = async (server, config) => {
     category: await category.register({ sql, getConnection }),
     bookInfo: await bookInfo.register({ sql, getConnection }),
     language: await language.register({ sql, getConnection }),
+    bookMark: await bookMark.register({ sql, getConnection }),
+    state: await state.register({ sql, getConnection }),
   };
 };
 
